@@ -1,2 +1,10 @@
 # Ignore Virtual Environment
 notes-mailer-venv
+
+# Ingore Env Vars
+.env
+
+# Ignore routes pycache
+__pycache__
+src/routes/__pycache__
+src/models/__pycache__
