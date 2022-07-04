@@ -28,6 +28,6 @@ app.json_encoder = AppJsonEncoder
 cors = CORS(app, resources={r"/list*": {"origins": "*"}})                                                                                                                                                                                                                                                                                                                                                                             
 
 # DO NOT PUSH TO PRODUCTION!
-if __name__ == "__main__":
-    app.run()
+# if __name__ == "__main__":
+#     app.run()
 
