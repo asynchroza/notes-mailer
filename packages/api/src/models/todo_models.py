@@ -1,10 +1,10 @@
 # validation schema for creating a to-do activity
 TODO_SCHEMA_POST = {
-    'required': ['id', 'todo', 'isodate', 'priority', 'checked'],
+    'required': ['id', 'todo', 'date', 'priority', 'checked'],
     'properties': {
         'id': {'type':'string'},
         'todo': {'type':'string'},
-        'isodate': {'type':'string', "pattern": "/(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/"},
+        'date': {'type':'string', "pattern": "^20[0-2][0-9]-((0[1-9])|(1[0-2]))-([0-2][1-9]|3[0-1])$"},
         'priority': {'type':'integer'},
         'checked': {'type':'boolean'}
     }, 
@@ -15,7 +15,7 @@ TODO_SCHEMA_POST = {
 TODO_SCHEMA_PATCH = {
     'properties': {
         'todo': {'type':'string'},
-        'isodate': {'type':'string', "pattern": "/(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/"},
+        'date': {'type':'string', "pattern": "^20[0-2][0-9]-((0[1-9])|(1[0-2]))-([0-2][1-9]|3[0-1])$"},
         'priority': {'type':'integer'},
         'checked': {'type':'boolean'}
     }

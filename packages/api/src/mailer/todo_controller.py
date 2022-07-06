@@ -5,6 +5,7 @@ from mail_controller import send_mail
 import os
 from dotenv import load_dotenv
 from bson.json_util import loads, dumps
+import datetime
 
 load_dotenv()
 
@@ -30,8 +31,12 @@ def get_all_todos():
     </body>
     </html>
     """
-    mail_body = []
-    data = current_col.find()
+
+    date = datetime.date.today()
+    print("Date today is: " + str(date))
+    data = list(current_col.find({"date":str(date)}))
+    print(data)
+
     if data is not None:
         data = loads(dumps(data))
         for i in range(len(data)):
