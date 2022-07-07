@@ -15,7 +15,17 @@ current_col = current_db["to-dos"]
 
 # implement filtering for current day
 # implement html template for 
-def get_all_todos():
+def delete_old_todos(day_today):
+    day_today = datetime.datetime.combine(day_today, datetime.time())
+
+    data = list(current_col.find())
+
+    for todo in data:
+        print(todo)
+        if datetime.datetime.strptime(todo['date'], '%Y-%m-%d') < day_today:
+            current_col.delete_one(todo)
+
+def send_current_todos():
     msg = MIMEMultipart('alternative')
     msg['Subject'] = "Today's To-Do's"
     html_start = """\
@@ -45,4 +55,5 @@ def get_all_todos():
         msg.attach(part)
         send_mail(msg)
 
-get_all_todos()
+send_current_todos()
+delete_old_todos(datetime.date.today())
