@@ -35,8 +35,8 @@ cors = CORS(app, resources={r"/list*": {"origins": "*"}})
 if __name__ == "__main__":
     app.run(host='localhost', port=5000)
 
-todo_job = threading.Thread(target=schedule_pending_todo_job)
-todo_job.start()
+# todo_job = threading.Thread(target=schedule_pending_todo_job)
+# todo_job.start()
 
 
 
