@@ -21,7 +21,6 @@ def delete_old_todos(day_today):
     data = list(current_col.find())
 
     for todo in data:
-        print(todo)
         if datetime.datetime.strptime(todo['date'], '%Y-%m-%d') < day_today:
             current_col.delete_one(todo)
 
@@ -54,6 +53,5 @@ def send_current_todos():
         part = MIMEText(html_start+html_end, 'html')
         msg.attach(part)
         send_mail(msg)
-
-send_current_todos()
-delete_old_todos(datetime.date.today())
+    
+    delete_old_todos(datetime.date.today()) # delete old notes (-1 day) after sending current ones

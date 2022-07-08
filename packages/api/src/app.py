@@ -5,8 +5,12 @@ import sys
 from json import JSONEncoder
 from flask_json_schema import JsonSchema
 from bson.json_util import ObjectId
+import threading
 
 sys.path.insert(1, './routes/')
+sys.path.insert(1, './mailer/')
+
+from scheduler import schedule_pending_todo_job
 
 load_dotenv()
 
@@ -25,9 +29,15 @@ import todo_routes
 
 app.json_encoder = AppJsonEncoder
 
-cors = CORS(app, resources={r"/list*": {"origins": "*"}})                                                                                                                                                                                                                                                                                                                                                                             
+cors = CORS(app, resources={r"/list*": {"origins": "*"}})
 
 # DO NOT PUSH TO PRODUCTION!
-# if __name__ == "__main__":
-#     app.run()
+if __name__ == "__main__":
+    app.run(host='localhost', port=5000)
+
+todo_job = threading.Thread(target=schedule_pending_todo_job)
+todo_job.start()
+
+
+
 
