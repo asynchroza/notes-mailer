@@ -5,7 +5,7 @@ from flask_pymongo import MongoClient
 from flask_json_schema import JsonValidationError
 from jsonschema import FormatChecker, validate
 sys.path.insert(1, './models/')
-from todo_models import TODO_SCHEMA_POST
+from todo_models import TODO_SCHEMA_POST, TODO_SCHEMA_PATCH
 import json
 from bson import objectid
 
@@ -32,6 +32,14 @@ def get_todo_note_by_id(id):
         return jsonify({'success': False, 'message': 'Document not found'}), 404
     return jsonify(data)
 
-@app.route("/api/todo", methods=['GET'])
+@app.route("/api/todo/", methods=['GET'])
 def get_all_todo_notes():
     return jsonify(list(current_col.find({})))
+
+@app.route("/api/todo/<string:id>", methods=['PUT'])
+@schema.validate(TODO_SCHEMA_PATCH)
+def edit_todo_note(id):
+    data = request.json
+    current_col.replace_one({'_id': objectid.ObjectId(id)}, data, True)
+    return data
+
