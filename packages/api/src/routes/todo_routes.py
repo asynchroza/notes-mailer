@@ -37,9 +37,17 @@ def get_all_todo_notes():
     return jsonify(list(current_col.find({})))
 
 @app.route("/api/todo/<string:id>", methods=['PUT'])
-@schema.validate(TODO_SCHEMA_PATCH)
 def edit_todo_note(id):
-    data = request.json
-    current_col.replace_one({'_id': objectid.ObjectId(id)}, data, True)
-    return data
+    try:
+        data = request.json
+        val_response = validate(data, TODO_SCHEMA_PATCH)
+    except Exception as e:
+        return jsonify({'success': False, 'exception': str(e)})
+    
+
+    data = {"$set": data}
+    response = current_col.find_one_and_update({"_id": objectid.ObjectId(id)}, data)
+    if response is None:
+        return jsonify({'success': False, 'message': 'Document not found'}), 400
+    return jsonify({'success': True, 'message': 'Document was updated', 'todo': response})
 
